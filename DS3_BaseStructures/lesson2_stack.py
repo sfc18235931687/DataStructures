@@ -11,9 +11,3 @@
         size()   返回栈的项目数，不需要参数，返回一个整数
 '''
 
-l = []
-l.append(4)
-l.append('aa')
-l.append('bb')
-l.pop()
-print(l)
