@@ -169,8 +169,8 @@ def main(numSeconds,pagesPerMinute):
 
         labPrinter.tick()
 
-        averageWait = sum(watingtimes)/len(watingtimes)
-        print('平均等待%6.2f秒 还剩%3d任务'%(averageWait,printQueue.size()))
+    averageWait = sum(watingtimes)/len(watingtimes)
+    print('平均等待%6.2f秒 还剩%3d任务'%(averageWait,printQueue.size()))
 
 def newPrintTask():
     num = random.randrange(1,181)
@@ -182,3 +182,8 @@ def newPrintTask():
 for i in range(10):
     main(3600,5)
 
+'''
+    1.学生数变为20
+    2.不局限在一个小时之内
+
+'''
