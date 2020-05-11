@@ -60,6 +60,7 @@ def palChecker(aString):
     charDeque = Deque()
     for ch in aString:
         charDeque.addFront(ch)
+        
     print(charDeque.size())
 
     stillEqual = True
@@ -71,4 +72,4 @@ def palChecker(aString):
             stillEqual = False
     return stillEqual
 
-print(palChecker('mad'))
+print(palChecker('mad am'))
