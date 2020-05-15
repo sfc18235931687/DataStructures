@@ -153,27 +153,99 @@ print(alist)
         优化了比对和移动的次数
 
         2.以2为间隔来划分，分成5个子列表
+
+        # 力扣 147题  对链表进行排序
+        def shellSort(alist):
+            sublistcount = len(alist)//2
+            while sublistcount > 0:
+                for i in range(sublistcount):
+                    gapInsertionSort(alist,i,sublistcount)
+
+                print('当前子列表为:',sublistcount,'当前整体列表为：',alist)
+                sublistcount = sublistcount//2
+
+        # 特定间隔分子列表，然后执行标准插入排序
+        def gapInsertionSort(alist,start,gap):
+            for i in range(start+gap,len(alist),gap):
+                currentValue = alist[i]
+                position = i
+
+                while position >= gap and alist[position-gap] > currentValue:
+                    alist[position] = alist[position-gap]
+                    position = position - gap
+                alist[position] = currentValue
+        
+        alist = [54,26,93,17,77,31,44,55,20]
+        shellSort(alist)
+        print(alist)
 '''
-# 力扣 147题  对链表进行排序
-def shellSort(alist):
-    sublistcount = len(alist)//2
-    while sublistcount > 0:
-        for i in range(sublistcount):
-            gapInsertionSort(alist,i,sublistcount)
 
-        print('当前子列表为:',sublistcount,'当前整体列表为：',alist)
-        sublistcount = sublistcount//2
 
-# 特定间隔分子列表，然后执行标准插入排序
-def gapInsertionSort(alist,start,gap):
-    for i in range(start+gap,len(alist),gap):
-        currentValue = alist[i]
-        position = i
 
-        while position >= gap and alist[position-gap] > currentValue:
-            alist[position] = alist[position-gap]
-            position = position - gap
-        alist[position] = currentValue
- 
+'''
+    五、归并排序(mergeSort)
+        具体做法：递归算法，不断的将列表拆分成一半。
+        如果列表为空或者具有一个元素，那么根据定义，他就被排好了
+
+        alist = [54,26,93,17,77,31,44,55,20]
+
+        第一次拆分：[54,26,93,17]       [77,31,44,55,20]
+        第二次拆分：[54,26] [93,17]     [77,31] [44,55,20]
+        第三次拆分：[54] [26] [93] [17]   [77] [31] [44] [55,20]
+        第四次拆分：                           [55] [20] 
+
+
+        [54] [26]   [93] [17]    [77] [31]   [44] [55] [20]
+ 1       [26,54]      [17,93]      [31,77]      [20,55]
+ 2           [17,26,54,93]                  [20,44,55]
+ 3                                   [20,31,44,55,77]
+ 4                 [17,20,26,31,44,54,55,77,93]
+
+'''
+def mergeSort(alist):
+    if len(alist) > 1:
+        mid = len(alist)//2
+        lefthalf = alist[:mid]
+        righthalf = alist[mid:]
+        print(lefthalf)
+        print(righthalf)
+
+        mergeSort(lefthalf)
+        mergeSort(righthalf)
+        
+        i = 0
+        j = 0
+        k = 0
+        while i < len(lefthalf) and j < len(righthalf):
+            if lefthalf[i] < righthalf[j]:
+                alist[k] = lefthalf[i]
+                i = i+1
+            else:
+                alist[k] = righthalf[j]
+                j = j+1
+            k = k+1
+        while i < len(lefthalf):
+            alist[k] = lefthalf[i]
+            i = i+1 
+            k = k+1
+
+        while j < len(righthalf):
+            alist[k] = righthalf[j]
+            j = j+1 
+            k = k+1
+
 alist = [54,26,93,17,77,31,44,55,20]
-shellSort(alist)
+mergeSort(alist)
+print(alist)
+
+
+
+
+
+
+
+'''
+    六、快速排序
+
+
+'''
