@@ -82,7 +82,58 @@
 
 
 四、分析树（使用树数据结构解决问题：字符串和数学计算问题）
-
-
+    如何从带有安全括号的数学表达式 ((7+3) * (5-2))去构建分析树？
+    怎么放入？
+    怎么取出？
+    # 分析：根节点，左子树，右子树
+    第一步：把表达式字符串拆分成符号列表。四种：左括号，右括号，运算符，操作数
+            读到一个左括号：开始一个新的表达式，树对应表达式的话，此时应当创建一个新的树
+            读到一个有括号：结束一个表达式
+            操作数是叶子节点，同时也是操作符的子节点
+            每一个操作符都有一个左，右孩子
+    第二步：根据第一步的分析，定义规则
+            如果当前符号是'（'，添加一个新节点作为当前节点的左子节点，并且下降到左子节点
+            如果当前符号是列表['+','-','/','*']中，将当前节点的根值设置为由当前符号表示的运算符。添加一个新节点作为当前节点的右子节点，并下降到右子节点
+            如果当前符号是数字，将当前节点的根值设置为该数字并返回父节点
+            如果当前符号是'(',则转到当前节点的父节点
 '''
+from pythonds.basic.stack import Stack
+from pythonds.trees.binaryTree import BinaryTree
 
+def buildParseTree(fpexp):
+    fplist = fpexp.split()
+    pStack = Stack()
+    eTree = BinaryTree('')
+    pStack.push(eTree)
+
+    for i in fplist:
+        if i == '(':
+            # 如果当前符号是“(”,添加一个新节点作为当前节点的左子节点，并且下降到左子节点
+            eTree.insertLeft('')
+            pStack.push(eTree)
+            eTree = eTree.getLeftChild()
+        elif i not in ['+','-','/','*',')']:
+            # 如果当前符号是数字，将当前节点的根值设置为该数字并返回父节点
+            eTree.setRootVal(int(i))
+            parent = pStack.pop()
+            eTree = parent
+        elif i in ['+','-','/','*']:
+            eTree.setRootVal(i)
+            eTree.insertRight('')
+            pStack.push(eTree)
+            eTree = eTree.getRightChild()
+        elif i == ')':
+            eTree = pStack.pop()
+        else:
+            raise ValueError
+    
+    return eTree
+
+fpexp = "( ( 7 + 3 ) * ( 5 - 2 ) )"
+parseTree = buildParseTree(fpexp)
+parseTree.postorder()
+
+
+# 定义一个函数，使用以上的构建函数，计算出完全表达式( ( 7 + 3 ) * ( 5 - 2 ) )的结果
+def evaluate(parseTree):
+    pass
